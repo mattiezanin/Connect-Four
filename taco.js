@@ -1,8 +1,75 @@
 document.addEventListener('DOMContentLoaded', () => {
   const squares = document.querySelectorAll('.gameBoard div')
-  const playerDisplay = document.querySelector('#playerSpot')
+  const statusDisplay = document.querySelector('#status')
+  const restartButton = document.querySelector('#restart')
   let currentPlayer = 1
-  playerDisplay.innerHTML = `Current Player: ${currentPlayer}`
+  statusDisplay.innerHTML = `Current Player: ${currentPlayer}`
+  const column0 = [
+    squares[35],
+    squares[28],
+    squares[21],
+    squares[14],
+    squares[7],
+    squares[0]
+  ]
+  const column1 = [
+    squares[36],
+    squares[29],
+    squares[22],
+    squares[15],
+    squares[8],
+    squares[1]
+  ]
+  const column2 = [
+    squares[37],
+    squares[30],
+    squares[23],
+    squares[16],
+    squares[9],
+    squares[2]
+  ]
+  const column3 = [
+    squares[38],
+    squares[31],
+    squares[24],
+    squares[17],
+    squares[10],
+    squares[3]
+  ]
+  const column4 = [
+    squares[39],
+    squares[32],
+    squares[25],
+    squares[18],
+    squares[11],
+    squares[4]
+  ]
+  const column5 = [
+    squares[40],
+    squares[33],
+    squares[26],
+    squares[19],
+    squares[12],
+    squares[5]
+  ]
+  const column6 = [
+    squares[41],
+    squares[34],
+    squares[27],
+    squares[20],
+    squares[13],
+    squares[6]
+  ]
+  const columns = [
+    column0,
+    column1,
+    column2,
+    column3,
+    column4,
+    column5,
+    column6
+  ]
+
   const winCombos = [
     [0, 1, 2, 3],
     [41, 40, 39, 38],
@@ -101,25 +168,30 @@ document.addEventListener('DOMContentLoaded', () => {
   squares.forEach((square) => {
     square.classList.add('empty')
   })
-
+  restartButton.addEventListener('click', () => {
+    resetBoard()
+  })
+  function resetBoard() {
+    squares.forEach((square) => {
+      square.classList.remove('claimed')
+    })
+  }
   for (let i = 0; i < squares.length; i++) {
     squares[i].addEventListener('click', () => {
-      if (squares[i].classList.contains('empty')) {
-        if (currentPlayer == 1) {
-          squares[i].classList.add('claimed')
-          squares[i].classList.add('playerOne')
-          squares[i].classList.remove('.empty')
-          currentPlayer = 2
-          playerDisplay.innerHTML = `Current Player: ${currentPlayer}`
-        } else if (currentPlayer == 2) {
-          squares[i].classList.add('.claimed')
-          squares[i].classList.add('playerTwo')
-          squares[i].classList.remove('.empty')
-          currentPlayer = 1
-          playerDisplay.innerHTML = `Current Player: ${currentPlayer}`
-        }
+      if (currentPlayer == 1) {
+        squares[i].classList.add('claimed')
+        squares[i].classList.add('playerOne')
+        squares[i].classList.remove('empty')
+        currentPlayer = 2
+        statusDisplay.innerHTML = `Current Player: ${currentPlayer}`
+      } else if (currentPlayer == 2) {
+        squares[i].classList.add('.claimed')
+        squares[i].classList.add('playerTwo')
+        squares[i].classList.remove('empty')
+        currentPlayer = 1
+        statusDisplay.innerHTML = `Current Player: ${currentPlayer}`
       }
-      checkWin()
     })
+    checkWin()
   }
 })
